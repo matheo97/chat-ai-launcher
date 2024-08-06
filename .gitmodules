@@ -1,6 +1,3 @@
-[submodule "client-getway"]
-	path = client-getway
-	url = https://github.com/matheo97/client-getway.git
 [submodule "auth-ms"]
 	path = auth-ms
 	url = https://github.com/matheo97/auth-ms.git
