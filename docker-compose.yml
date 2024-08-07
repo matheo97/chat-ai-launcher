@@ -33,6 +33,6 @@ services:
       - ./account-mw/src:/usr/src/app/src
     command: npm run start:dev
     environment:
-      - PORT=3004
+      - PORT=3003
       - NATS_SERVERS=nats://nats-server:4222
       - JWT_SECRET=${JWT_SECRET}
