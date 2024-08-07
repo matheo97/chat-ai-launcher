@@ -7,3 +7,6 @@
 [submodule "account-mw"]
 	path = account-mw
 	url = https://github.com/matheo97/account-mw.git
+[submodule "ai-messaging-mw"]
+	path = ai-messaging-mw
+	url = https://github.com/jfernandezdev14/ai-messaging-middleware.git
