@@ -26,6 +26,7 @@ services:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
       - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${AUTH_DATABASE_URL}
 
   account-mw:
     build: ./account-mw
