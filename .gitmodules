@@ -10,3 +10,6 @@
 [submodule "ai-messaging-mw"]
 	path = ai-messaging-mw
 	url = https://github.com/jfernandezdev14/ai-messaging-middleware.git
+[submodule "users-ms"]
+	path = users-ms
+	url = https://github.com/matheo97/users-ms
