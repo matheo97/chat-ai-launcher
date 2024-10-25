@@ -47,3 +47,28 @@ services:
       - PORT=3005
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=randomurl
+
+  users-ms:
+    depends_on:
+      - users-db
+    build: ./users-ms
+    volumes:
+      - ./users-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3002
+      - DATABASE_URL=${USERS_DATABASE_URL}
+      - NATS_SERVERS=nats://nats-server:4222
+
+  users-db:
+    container_name: users_database
+    image: postgres:16.2
+    restart: always
+    volumes:
+      - ./users-ms/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${USERS_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${USERS_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${USERS_POSTGRES_DB}
