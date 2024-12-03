@@ -67,7 +67,7 @@ services:
     volumes:
       - ./users-ms/postgres:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5436:5432
     environment:
       - POSTGRES_USER=${USERS_POSTGRES_USER}
       - POSTGRES_PASSWORD=${USERS_POSTGRES_PASSWORD}
