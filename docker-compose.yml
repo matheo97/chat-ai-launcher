@@ -48,6 +48,19 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=randomurl
 
+  users-db:
+    container_name: users_database
+    image: postgres:16.2
+    restart: always
+    volumes:
+      - ./users-ms/postgres:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+    environment:
+      - POSTGRES_USER=${USERS_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${USERS_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${USERS_POSTGRES_DB}
+
   users-ms:
     depends_on:
       - users-db
@@ -60,15 +73,26 @@ services:
       - DATABASE_URL=${USERS_DATABASE_URL}
       - NATS_SERVERS=nats://nats-server:4222
 
-  users-db:
-    container_name: users_database
-    image: postgres:16.2
-    restart: always
+  ai-ms:
+    build: ./ai-ms
+    image: fastapi-python-app:latest
+    networks:
+      - default
     volumes:
-      - ./users-ms/postgres:/var/lib/postgresql/data
+      - ./ai-ms:/app  # Mount current directory for live development
     ports:
-      - 5436:5432
+      - "8000:8000"  # Expose FastAPI app on port 8000
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     environment:
-      - POSTGRES_USER=${USERS_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${USERS_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${USERS_POSTGRES_DB}
+      - PORT=8000
+      - NATS_SERVERS=nats://nats-server:4222
+      - GEMINI_AI_KEY=${GEMINI_AI_KEY}
+      - DB_URL=${DB_URL}
+      - DB_NAME=${DB_NAME}
+      - JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - JWT_ALGORITHM=${JWT_ALGORITHM}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+
+
