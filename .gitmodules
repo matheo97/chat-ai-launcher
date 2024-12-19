@@ -15,4 +15,4 @@
 	url = git@github.com:matheo97/users-ms.git
 [submodule "ai-ms"]
 	path = ai-ms
-	url = https://github.com/jfernandezdev14/ai-service-api.git
+	url = git@github.com:jfernandezdev14/ai-service-api.git
